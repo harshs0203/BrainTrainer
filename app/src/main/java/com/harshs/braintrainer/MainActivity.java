@@ -15,6 +15,7 @@ import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
+    TextView resultTextView;
     TextView timerTextView;
     TextView scoreTextView;
     TextView sumTextView;
@@ -23,11 +24,12 @@ public class MainActivity extends AppCompatActivity {
     Button goButton;
     ArrayList<Integer> answers = new ArrayList<Integer>();
     int locationOfCorrectAnswer;
+    int score;
 
     public void goButtonFunction(View view ){
 
         Log.i("Connection","Successful");
-        final MediaPlayer mediaPlayer= MediaPlayer.create(this, R.raw.airhorn);
+        final MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.airhorn);
 
         timerTextView = (TextView) findViewById(R.id.timerTextView);
         timerTextView.setVisibility(View.VISIBLE);
@@ -44,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         goButton = (Button) findViewById(R.id.goButton);
         goButton.setVisibility(View.INVISIBLE);
 
-        new CountDownTimer(3000 + 100,1000){
+        new CountDownTimer(10000 + 100,1000){
             @Override
             public void onTick(long millisUntilFinished) {
 
@@ -73,6 +75,18 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void chooseOption(View view){
+
+        if(view.getTag().toString().equals(Integer.toString(locationOfCorrectAnswer))) {
+
+            score++;
+            resultTextView.setVisibility(View.VISIBLE);
+            resultTextView.setText("Correct");
+
+        }
+
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,6 +97,7 @@ public class MainActivity extends AppCompatActivity {
         Button option2 = (Button) findViewById(R.id.button1);
         Button option3 = (Button) findViewById(R.id.button2);
         Button option4 = (Button) findViewById(R.id.button3);
+        resultTextView = (TextView) findViewById(R.id.resultTextView);
 
 
         int a = new Random().nextInt(21);
