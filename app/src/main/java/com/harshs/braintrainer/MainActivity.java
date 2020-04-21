@@ -19,12 +19,59 @@ public class MainActivity extends AppCompatActivity {
     TextView timerTextView;
     TextView scoreTextView;
     TextView sumTextView;
+
     GridLayout gridLayout;
+
     Button playAgainButton;
     Button goButton;
+    Button option1;
+    Button option2;
+    Button option3;
+    Button option4;
+
     ArrayList<Integer> answers = new ArrayList<Integer>();
+
     int locationOfCorrectAnswer;
-    int score;
+    int score = 0;
+    int numberOfQuestions=0;
+
+    public void generateQuestions(){
+        int a = new Random().nextInt(21);
+        int b = new Random().nextInt(21);
+
+        sumTextView.setText(a+" + "+b);
+
+        locationOfCorrectAnswer = new Random().nextInt(4);
+
+        answers.clear();
+
+        int incorrectAnswer;
+
+        for (int i = 0 ; i < 4; i++){
+
+            if(i == locationOfCorrectAnswer){
+
+                answers.add(a+b);
+
+            }else {
+
+                incorrectAnswer = new Random().nextInt(51);
+
+                while (incorrectAnswer == a + b){
+
+                    incorrectAnswer = new Random().nextInt(51);
+                }
+
+                answers.add(incorrectAnswer);
+
+            }
+        }
+        option1.setText(Integer.toString(answers.get(0)));
+        option2.setText(Integer.toString(answers.get(1)));
+        option3.setText(Integer.toString(answers.get(2)));
+        option4.setText(Integer.toString(answers.get(3)));
+
+    }
 
     public void goButtonFunction(View view ){
 
@@ -82,8 +129,14 @@ public class MainActivity extends AppCompatActivity {
             score++;
             resultTextView.setVisibility(View.VISIBLE);
             resultTextView.setText("Correct");
+        }else{
 
+            resultTextView.setVisibility(View.VISIBLE);
+            resultTextView.setText("InCorrect");
         }
+        numberOfQuestions ++;
+        scoreTextView.setText(score+" / "+numberOfQuestions);
+        generateQuestions();
 
     }
 
@@ -93,48 +146,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         sumTextView = (TextView) findViewById(R.id.sumTextView);
-        Button option1 = (Button) findViewById(R.id.button0);
-        Button option2 = (Button) findViewById(R.id.button1);
-        Button option3 = (Button) findViewById(R.id.button2);
-        Button option4 = (Button) findViewById(R.id.button3);
+        option1 = (Button) findViewById(R.id.button0);
+        option2 = (Button) findViewById(R.id.button1);
+        option3 = (Button) findViewById(R.id.button2);
+        option4 = (Button) findViewById(R.id.button3);
         resultTextView = (TextView) findViewById(R.id.resultTextView);
+        scoreTextView = (TextView) findViewById(R.id.scoreTextView);
 
-
-        int a = new Random().nextInt(21);
-        int b = new Random().nextInt(21);
-
-        sumTextView.setText(a+" + "+b);
-
-        locationOfCorrectAnswer = new Random().nextInt(4);
-
-        int incorrectAnswer;
-
-        for (int i = 0 ; i < 4; i++){
-
-            if(i == locationOfCorrectAnswer){
-
-                answers.add(a+b);
-
-            }else {
-
-                incorrectAnswer = new Random().nextInt(51);
-
-                while (incorrectAnswer == a + b){
-
-                    incorrectAnswer = new Random().nextInt(51);
-                }
-
-                answers.add(incorrectAnswer);
-
-            }
-            }
-        option1.setText(Integer.toString(answers.get(0)));
-        option2.setText(Integer.toString(answers.get(1)));
-        option3.setText(Integer.toString(answers.get(2)));
-        option4.setText(Integer.toString(answers.get(3)));
-
-
-
+        generateQuestions();
 
     }
 }
