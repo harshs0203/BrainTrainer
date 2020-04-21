@@ -37,6 +37,31 @@ public class MainActivity extends AppCompatActivity {
         goButton = (Button) findViewById(R.id.goButton);
         goButton.setVisibility(View.INVISIBLE);
 
+        new CountDownTimer(3000 + 100,1000){
+            @Override
+            public void onTick(long millisUntilFinished) {
+
+                Log.i("Tik", "Tok");
+                String second = Long.toString(millisUntilFinished /1000);
+
+                if(millisUntilFinished < 10){
+
+                    second = "0 " + Long.toString(millisUntilFinished);
+
+                }
+                timerTextView.setText("0 : " + second );
+            }
+
+            @Override
+            public void onFinish() {
+
+             playAgainButton = (Button) findViewById(R.id.playAgainButton);
+               Log.i("Finished", "True");
+                timerTextView.setText("0 : 00");
+                playAgainButton.setVisibility(View.VISIBLE);
+
+            }
+        }.start();
 
     }
 
