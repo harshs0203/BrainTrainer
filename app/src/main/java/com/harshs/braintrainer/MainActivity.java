@@ -31,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
 
     ArrayList<Integer> answers = new ArrayList<Integer>();
 
+    Boolean gameIsActive = true;
+
     int locationOfCorrectAnswer;
     int score = 0;
     int numberOfQuestions=0;
@@ -47,30 +49,31 @@ public class MainActivity extends AppCompatActivity {
 
         int incorrectAnswer;
 
-        for (int i = 0 ; i < 4; i++){
+       if (gameIsActive){
+           for (int i = 0; i < 4; i++) {
 
-            if(i == locationOfCorrectAnswer){
+               if (i == locationOfCorrectAnswer) {
 
-                answers.add(a+b);
+                   answers.add(a + b);
 
-            }else {
+               } else {
 
-                incorrectAnswer = new Random().nextInt(51);
+                   incorrectAnswer = new Random().nextInt(51);
 
-                while (incorrectAnswer == a + b){
+                   while (incorrectAnswer == a + b) {
 
-                    incorrectAnswer = new Random().nextInt(51);
-                }
+                       incorrectAnswer = new Random().nextInt(51);
+                   }
 
-                answers.add(incorrectAnswer);
+                   answers.add(incorrectAnswer);
 
-            }
-        }
-        option1.setText(Integer.toString(answers.get(0)));
-        option2.setText(Integer.toString(answers.get(1)));
-        option3.setText(Integer.toString(answers.get(2)));
-        option4.setText(Integer.toString(answers.get(3)));
-
+               }
+           }
+           option1.setText(Integer.toString(answers.get(0)));
+           option2.setText(Integer.toString(answers.get(1)));
+           option3.setText(Integer.toString(answers.get(2)));
+           option4.setText(Integer.toString(answers.get(3)));
+       }
     }
 
     public void goButtonFunction(View view ){
@@ -93,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
         goButton = (Button) findViewById(R.id.goButton);
         goButton.setVisibility(View.INVISIBLE);
 
-        new CountDownTimer(10000 + 100,1000){
+        new CountDownTimer(30000 + 100,1000){
             @Override
             public void onTick(long millisUntilFinished) {
 
@@ -117,6 +120,13 @@ public class MainActivity extends AppCompatActivity {
                 playAgainButton.setVisibility(View.VISIBLE);
                 resultTextView.setText("Your score is: "+ score + "/"+numberOfQuestions);
                 mediaPlayer.start();
+                gameIsActive = false;
+
+                option1.setClickable(false);
+                option2.setClickable(false);
+                option3.setClickable(false);
+                option4.setClickable(false);
+
 
             }
         }.start();
@@ -127,10 +137,18 @@ public class MainActivity extends AppCompatActivity {
 
         score=0;
         numberOfQuestions=0;
+        gameIsActive = true;
         timerTextView.setText("30s");
 
+
+        gameIsActive = false;
+        option1.setClickable(true);
+        option2.setClickable(true);
+        option3.setClickable(true);
+        option4.setClickable(true);
+
         final MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.airhorn);
-        new CountDownTimer(10000 + 100,1000){
+        new CountDownTimer(30000 + 100,1000){
             @Override
             public void onTick(long millisUntilFinished) {
 
@@ -154,12 +172,20 @@ public class MainActivity extends AppCompatActivity {
                 playAgainButton.setVisibility(View.VISIBLE);
                 resultTextView.setText("Your score is: "+ score + "/"+numberOfQuestions);
                 mediaPlayer.start();
-
+                option1.setClickable(false);
+                option2.setClickable(false);
+                option3.setClickable(false);
+                option4.setClickable(false);
             }
         }.start();
 
+
+
         resultTextView.setText("");
         playAgainButton.setVisibility(View.INVISIBLE);
+        generateQuestions();
+
+
 
     }
 
