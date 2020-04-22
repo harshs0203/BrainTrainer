@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
                     second = "0 " + Long.toString(millisUntilFinished);
 
                 }
-                timerTextView.setText("0 : " + second );
+                timerTextView.setText( second + "s" );
             }
 
             @Override
@@ -113,12 +113,53 @@ public class MainActivity extends AppCompatActivity {
 
              playAgainButton = (Button) findViewById(R.id.playAgainButton);
                Log.i("Finished", "True");
-                timerTextView.setText("0 : 00");
+                timerTextView.setText("0s");
                 playAgainButton.setVisibility(View.VISIBLE);
+                resultTextView.setText("Your score is: "+ score + "/"+numberOfQuestions);
                 mediaPlayer.start();
 
             }
         }.start();
+
+    }
+
+    public void playAgain(View view){
+
+        score=0;
+        numberOfQuestions=0;
+        timerTextView.setText("30s");
+
+        final MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.airhorn);
+        new CountDownTimer(10000 + 100,1000){
+            @Override
+            public void onTick(long millisUntilFinished) {
+
+                Log.i("Tik", "Tok");
+                String second = Long.toString(millisUntilFinished /1000);
+
+                if(millisUntilFinished < 10){
+
+                    second = "0 " + Long.toString(millisUntilFinished);
+
+                }
+                timerTextView.setText( second + "s" );
+            }
+
+            @Override
+            public void onFinish() {
+
+                playAgainButton = (Button) findViewById(R.id.playAgainButton);
+                Log.i("Finished", "True");
+                timerTextView.setText("0s");
+                playAgainButton.setVisibility(View.VISIBLE);
+                resultTextView.setText("Your score is: "+ score + "/"+numberOfQuestions);
+                mediaPlayer.start();
+
+            }
+        }.start();
+
+        resultTextView.setText("");
+        playAgainButton.setVisibility(View.INVISIBLE);
 
     }
 
