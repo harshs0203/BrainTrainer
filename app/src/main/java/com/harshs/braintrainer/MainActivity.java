@@ -179,7 +179,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }.start();
 
-
+        gameIsActive=true;
 
         resultTextView.setText("");
         playAgainButton.setVisibility(View.INVISIBLE);
